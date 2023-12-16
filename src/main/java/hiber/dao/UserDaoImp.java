@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class UserDaoImp implements UserDao {
            "WHERE model = :inputModel " +
            "AND series = :inputSeries";
    String hqlUser = "FROM User " +
-           "WHERE cars_id = :inputCarsId";
+           "WHERE car_id = :inputCarsId";
 
    @Override
    public void add(User user) {
@@ -27,10 +28,11 @@ public class UserDaoImp implements UserDao {
    }
 
    @Override
-   @SuppressWarnings("unchecked")
    public List<User> listUsers() {
-      TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
+      Query query = sessionFactory.getCurrentSession()
+              .createQuery("FROM User");
       return query.getResultList();
+
    }
 
    @Override

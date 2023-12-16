@@ -47,7 +47,7 @@ public class MainApp {
             System.out.println();
          }
       } else {
-         System.out.println("Пользователей с таким автомобилем или таких автомобилей не существует");
+         System.out.println("Пользователей с таким автомобилем или таким автомобилей не существует");
       }
       context.close();
    }
