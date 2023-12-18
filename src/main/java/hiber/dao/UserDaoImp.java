@@ -16,11 +16,7 @@ public class UserDaoImp implements UserDao {
 
    @Autowired
    private SessionFactory sessionFactory;
-   String hqlCar = "FROM Car " +
-           "WHERE model = :inputModel " +
-           "AND series = :inputSeries";
-   String hqlUser = "FROM User " +
-           "WHERE car_id = :inputCarsId";
+
 
    @Override
    public void add(User user) {
@@ -29,23 +25,20 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public List<User> listUsers() {
-      Query query = sessionFactory.getCurrentSession()
-              .createQuery("FROM User");
-      return query.getResultList();
-
+      return sessionFactory.getCurrentSession().createQuery("FROM User").getResultList();//todo: рефакторинг
    }
 
    @Override
-   public List<User> carByUsers(String model, int series) {
+   public List<User> carByUsers(String model, int series) {//todo: переходим на ссылочный тип, избавляемся от примитивов
       Session session = sessionFactory.getCurrentSession();
-      Car car = session.createQuery(hqlCar, Car.class)
+      Car car = session.createQuery("FROM Car WHERE model = :inputModel AND series = :inputSeries", Car.class)//todo: hql-запросы не выносятся (не видел), но выносятся SQL
               .setParameter("inputModel", model)
               .setParameter("inputSeries", series)
               .uniqueResult();
       if (car == null) {
          return null;
       } else {
-         return session.createQuery(hqlUser, User.class)
+         return session.createQuery("FROM User WHERE car_id = :inputCarsId", User.class)
                  .setParameter("inputCarsId", car.getId())
                  .getResultList();
       }

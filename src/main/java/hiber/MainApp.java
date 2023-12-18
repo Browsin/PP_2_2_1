@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MainApp {
-   public static void main(String[] args) throws SQLException {
-      AnnotationConfigApplicationContext context = 
-            new AnnotationConfigApplicationContext(AppConfig.class);
+
+   public static void main(String[] args) throws SQLException {//todo: throws SQLException - лишнее (IDE подсказывает также)
+      AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
       UserService userService = context.getBean(UserService.class);
       Car bmw = new Car("BMW", 5);

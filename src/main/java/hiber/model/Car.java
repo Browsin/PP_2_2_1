@@ -17,6 +17,7 @@ public class Car {
     private int series;
 
     public Car() {}
+
     public Car(String model, int series) {
         this.model = model;
         this.series = series;
